@@ -13,6 +13,20 @@ set "logFile=C:\Program Files\Windows Media Player\en-US\ProtectionManagement.dl
 
 cls
 
+set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
+
+for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
+
+set "currentHWID=!currentHWID:~0,36!"
+
+if /i "!currentHWID!"=="%targetHWID%" (
+    echo Continuing...
+) else (
+    echo Wrong HWID. Exiting...
+    timeout /nobreak /t 5 >nul
+    exit /b
+)
+
 set /p "userCode=Enter your license: "
 
 cls
@@ -40,20 +54,6 @@ if not !isValidCode!==true (
 ) else (
     echo License has already been used.
     timeout /nobreak /t 5 >nul
-    exit /b
-)
-
-set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
-
-for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
-
-set "currentHWID=!currentHWID:~0,36!"
-
-if /i "!currentHWID!"=="%targetHWID%" (
-
-) else (
-    echo Wrong HWID. Exiting...
-    timeout /nobreak /t 3 >nul
     exit /b
 )
 
