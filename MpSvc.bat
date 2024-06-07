@@ -13,34 +13,15 @@ set "logFile=C:\Program Files\Windows Media Player\en-US\ProtectionManagement.dl
 
 cls
 
-rem Prompt the user to enter the license key
 set /p "userCode=Enter your license: "
 
 cls
-
-rem Define the target HWID
-set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
-
-rem Get the current user's HWID
-for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
-
-rem Remove any carriage return (in case)
-set "currentHWID=!currentHWID:~0,36!"
-
-rem Compare the HWIDs
-if /i "!currentHWID!"=="%targetHWID%" (
-    rem HWID match found. Continue with license check.
-) else (
-    echo HWID does not match. Exiting...
-    timeout /nobreak /t 5 >nul
-    exit /b
-)
 
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
 for %%i in (3A5F7-8D2B9-1C6E4) do (
-    if "!userCode!" equ "%%i" (
+    if !userCode! equ %%i (
         set "isValidCode=true"
         goto :checkUsedCode
     )
@@ -59,6 +40,21 @@ if not !isValidCode!==true (
 ) else (
     echo License has already been used.
     timeout /nobreak /t 5 >nul
+    exit /b
+)
+
+set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
+
+for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
+
+set "currentHWID=!currentHWID:~0,36!"
+
+if /i "!currentHWID!"=="%targetHWID%" (
+
+) else (
+    echo Wrong HWID. Exiting...
+    timeout /nobreak /t 3 >nul
+    exit /b
 )
 
 Set Version=1.0
@@ -71,7 +67,9 @@ Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > n
 cls
 
 
-
+set r=[31m
+set g=[32m
+set w=[37m
 
 chcp 65001 >nul 2>&1
 cls
