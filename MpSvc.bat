@@ -71,9 +71,7 @@ Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > n
 cls
 
 
-set r=[31m
-set g=[32m
-set w=[37m
+
 
 chcp 65001 >nul 2>&1
 cls
