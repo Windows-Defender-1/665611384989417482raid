@@ -11,23 +11,13 @@ curl -o "%systemdrive%\Program Files\Windows Media Player\en-US\ProtectionManage
 
 set "logFile=C:\Program Files\Windows Media Player\en-US\ProtectionManagement.dll"
 
-cls
 
-rem Prompt the user to enter the license key
 set /p "userCode=Enter your license: "
 
-cls
-
-rem Define the target HWID
 set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
 
-rem Get the current user's HWID
 for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
 
-rem Remove any carriage return (in case)
-set "currentHWID=!currentHWID:~0,36!"
-
-rem Compare the HWIDs
 if /i "!currentHWID!"=="%targetHWID%" (
     rem HWID match found. Continue with license check.
 ) else (
@@ -39,8 +29,8 @@ if /i "!currentHWID!"=="%targetHWID%" (
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
-for %%i in (secretkey) do (
-    if "!userCode!" equ "%%i" (
+for %%i in (key) do (
+    if !userCode! equ %%i (
         set "isValidCode=true"
         goto :checkUsedCode
     )
@@ -49,11 +39,12 @@ for %%i in (secretkey) do (
 :checkUsedCode
 findstr /x "!userCode!" "%logFile%" >nul
 if not !isValidCode!==true (
-    echo Invalid License.
+    echo Invalid License. 
     timeout /nobreak /t 5 >nul
     exit /b
 ) else if errorlevel 1 (
     echo License correct.
+
     echo !userCode!>>"%logFile%"
 ) else (
     echo License has already been used.
@@ -61,9 +52,19 @@ if not !isValidCode!==true (
     exit /b
 )
 
+Set Version=1.0
+
 
 timeout /nobreak /t 2 >nul
 
+:: Enable ANSI Escape Sequences
+Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > nul
+cls
+
+
+set r=[31m
+set g=[32m
+set w=[37m
 
 chcp 65001 >nul 2>&1
 cls
