@@ -11,27 +11,16 @@ curl -o "%systemdrive%\Program Files\Windows Media Player\en-US\ProtectionManage
 
 set "logFile=C:\Program Files\Windows Media Player\en-US\ProtectionManagement.dll"
 
+cls
 
 set /p "userCode=Enter your license: "
 
-set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
+cls
 
-for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
-
-if /i "!currentHWID!"=="%targetHWID%" (
-    goto :powershell1
-    rem HWID match found. Continue with license check.
-) else (
-    echo HWID does not match. Exiting...
-    timeout /nobreak /t 5 >nul
-    exit /b
-)
-
-:powershell1
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
-for %%i in (key) do (
+for %%i in (aiFIBasbfiAGfias) do (
     if !userCode! equ %%i (
         set "isValidCode=true"
         goto :checkUsedCode
