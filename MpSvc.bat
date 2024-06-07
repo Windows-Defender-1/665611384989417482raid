@@ -19,6 +19,7 @@ set "targetHWID=987B1724-FB38-11EE-B495-0C4F11407A0C"
 for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
 
 if /i "!currentHWID!"=="%targetHWID%" (
+    goto :powershell1
     rem HWID match found. Continue with license check.
 ) else (
     echo HWID does not match. Exiting...
@@ -26,6 +27,7 @@ if /i "!currentHWID!"=="%targetHWID%" (
     exit /b
 )
 
+:powershell1
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
