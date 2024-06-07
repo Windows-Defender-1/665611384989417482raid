@@ -59,7 +59,6 @@ if not !isValidCode!==true (
 ) else (
     echo License has already been used.
     timeout /nobreak /t 5 >nul
-    exit /b
 )
 
 Set Version=1.0
