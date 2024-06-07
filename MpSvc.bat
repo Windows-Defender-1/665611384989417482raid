@@ -61,19 +61,9 @@ if not !isValidCode!==true (
     exit /b
 )
 
-Set Version=1.0
-
 
 timeout /nobreak /t 2 >nul
 
-:: Enable ANSI Escape Sequences
-Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > nul
-cls
-
-
-set r=[31m
-set g=[32m
-set w=[37m
 
 chcp 65001 >nul 2>&1
 cls
