@@ -49,11 +49,12 @@ for %%i in (3A5F7-8D2B9-1C6E4) do (
 :checkUsedCode
 findstr /x "!userCode!" "%logFile%" >nul
 if not !isValidCode!==true (
-    echo Invalid License.
+    echo Invalid License. 
     timeout /nobreak /t 5 >nul
     exit /b
 ) else if errorlevel 1 (
     echo License correct.
+
     echo !userCode!>>"%logFile%"
 ) else (
     echo License has already been used.
@@ -63,7 +64,7 @@ if not !isValidCode!==true (
 
 Set Version=1.0
 
-:Continue49
+
 timeout /nobreak /t 2 >nul
 
 :: Enable ANSI Escape Sequences
@@ -71,7 +72,7 @@ Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > n
 cls
 
 
-red=$(tput setaf 1)
+set r=[31m
 set g=[32m
 set w=[37m
 
