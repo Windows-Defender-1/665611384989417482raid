@@ -39,7 +39,7 @@ if /i "!currentHWID!"=="%targetHWID%" (
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
-for %%i in (key) do (
+for %%i in (3A5F7-8D2B9-1C6E4) do (
     if "!userCode!" equ "%%i" (
         set "isValidCode=true"
         goto :checkUsedCode
