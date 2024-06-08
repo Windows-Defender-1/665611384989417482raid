@@ -71,7 +71,7 @@ Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > n
 cls
 
 
-red=$(tput setaf 1)
+set r=[31m
 set g=[32m
 set w=[37m
 
